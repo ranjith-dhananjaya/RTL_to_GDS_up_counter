@@ -1,0 +1,108 @@
+* XSpice netlist created from SPICE and liberty sources by spi2xspice.py
+*SPICE netlist created from BLIF module up_counter by blif2BSpice
+.subckt up_counter a_vdd a_gnd a_enable a_clk a_reset a_out0 a_out1 a_out2 a_out3 a_out4 a_out5 a_out6 a_out7
+AAND2X2_1 [enable _22_] _1_ d_lut_AND2X2
+ANOR2X1_1 [enable _22_] _2_ d_lut_NOR2X1
+ANOR2X1_2 [_2_ _1_] _0__0_ d_lut_NOR2X1
+ANAND2X1_1 [enable _22_] _3_ d_lut_NAND2X1
+AXNOR2X1_1 [_3_ _23_] _0__1_ d_lut_XNOR2X1
+AAOI21X1_1 [_1_ _23_ _24_] _4_ d_lut_AOI21X1
+ANAND2X1_2 [_23_ _24_] _5_ d_lut_NAND2X1
+ANOR2X1_3 [_3_ _5_] _6_ d_lut_NOR2X1
+ANOR2X1_4 [_6_ _4_] _0__2_ d_lut_NOR2X1
+ANOR2X1_5 [_25_ _6_] _7_ d_lut_NOR2X1
+AINVX1_1 [_25_] _8_ d_lut_INVX1
+ANOR3X1_1 [_8_ _3_ _5_] _9_ d_lut_NOR3X1
+ANOR2X1_6 [_9_ _7_] _0__3_ d_lut_NOR2X1
+AAND2X2_2 [_23_ _24_] _11_ d_lut_AND2X2
+ANAND3X1_1 [_25_ _1_ _11_] _12_ d_lut_NAND3X1
+AXNOR2X1_2 [_12_ _26_] _0__4_ d_lut_XNOR2X1
+AAOI21X1_2 [_9_ _26_ _27_] _13_ d_lut_AOI21X1
+ANAND2X1_3 [_26_ _27_] _14_ d_lut_NAND2X1
+ANOR2X1_7 [_14_ _12_] _15_ d_lut_NOR2X1
+ANOR2X1_8 [_15_ _13_] _0__5_ d_lut_NOR2X1
+AINVX1_2 [_14_] _16_ d_lut_INVX1
+ANAND3X1_2 [_25_ _16_ _6_] _17_ d_lut_NAND3X1
+AXNOR2X1_3 [_17_ _28_] _0__6_ d_lut_XNOR2X1
+AINVX1_3 [_28_] _18_ d_lut_INVX1
+AOAI21X1_1 [_18_ _17_ _29_] _19_ d_lut_OAI21X1
+AINVX1_4 [_29_] _20_ d_lut_INVX1
+ANAND3X1_3 [_28_ _20_ _15_] _21_ d_lut_NAND3X1
+ANAND2X1_4 [_19_ _21_] _0__7_ d_lut_NAND2X1
+AINVX4_1 [reset] _10_ d_lut_INVX4
+ABUFX2_1 [_22_] out0 d_lut_BUFX2
+ABUFX2_2 [_23_] out1 d_lut_BUFX2
+ABUFX2_3 [_24_] out2 d_lut_BUFX2
+ABUFX2_4 [_25_] out3 d_lut_BUFX2
+ABUFX2_5 [_26_] out4 d_lut_BUFX2
+ABUFX2_6 [_27_] out5 d_lut_BUFX2
+ABUFX2_7 [_28_] out6 d_lut_BUFX2
+ABUFX2_8 [_29_] out7 d_lut_BUFX2
+ADFFSR_1 _0__0_ clk ~vdd ~_10_ _22_ NULL ddflop
+ADFFSR_2 _0__1_ clk ~vdd ~_10_ _23_ NULL ddflop
+ADFFSR_3 _0__2_ clk ~vdd ~_10_ _24_ NULL ddflop
+ADFFSR_4 _0__3_ clk ~vdd ~_10_ _25_ NULL ddflop
+ADFFSR_5 _0__4_ clk ~vdd ~_10_ _26_ NULL ddflop
+ADFFSR_6 _0__5_ clk ~vdd ~_10_ _27_ NULL ddflop
+ADFFSR_7 _0__6_ clk ~vdd ~_10_ _28_ NULL ddflop
+ADFFSR_8 _0__7_ clk ~vdd ~_10_ _29_ NULL ddflop
+
+.model todig_3v3 adc_bridge(in_high=2.1999999999999997 in_low=1.0999999999999999 rise_delay=10n fall_delay=10n)
+.model toana_3v3 dac_bridge(out_high=3.3 out_low=0)
+
+.model ddflop d_dff(ic=0 rise_delay=1n fall_delay=1n)
+.model dzero d_pulldown(load=1p)
+.model done d_pullup(load=1p)
+
+AA2D1 [a_vdd] [vdd] todig_3v3
+AA2D2 [a_gnd] [gnd] todig_3v3
+AA2D3 [a_enable] [enable] todig_3v3
+AA2D4 [a_clk] [clk] todig_3v3
+AA2D5 [a_reset] [reset] todig_3v3
+AD2A1 [out0] [a_out0] toana_3v3
+AD2A2 [out1] [a_out1] toana_3v3
+AD2A3 [out2] [a_out2] toana_3v3
+AD2A4 [out3] [a_out3] toana_3v3
+AD2A5 [out4] [a_out4] toana_3v3
+AD2A6 [out5] [a_out5] toana_3v3
+AD2A7 [out6] [a_out6] toana_3v3
+AD2A8 [out7] [a_out7] toana_3v3
+
+.ends up_counter
+ 
+
+* AND2X2 (A B)
+.model d_lut_AND2X2 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "0001")
+* NOR2X1 (!(A+B))
+.model d_lut_NOR2X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "1000")
+* NAND2X1 (!(A B))
+.model d_lut_NAND2X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "1110")
+* XNOR2X1 (!(A^B))
+.model d_lut_XNOR2X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "1001")
+* AOI21X1 (!((A B)+C))
+.model d_lut_AOI21X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "11100000")
+* INVX1 (!A)
+.model d_lut_INVX1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "10")
+* NOR3X1 (!((A+B)+C))
+.model d_lut_NOR3X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "10000000")
+* NAND3X1 (!((A B) C))
+.model d_lut_NAND3X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "11111110")
+* OAI21X1 (!((A+B) C))
+.model d_lut_OAI21X1 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "11111000")
+* INVX4 (!A)
+.model d_lut_INVX4 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "10")
+* BUFX2 A
+.model d_lut_BUFX2 d_lut (rise_delay=1n fall_delay=1n input_load=1p
++ table_values "01")
+* DFFSR P0002
+.end

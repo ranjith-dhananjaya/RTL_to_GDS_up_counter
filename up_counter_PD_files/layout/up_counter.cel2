@@ -1,0 +1,17 @@
+padgroup inputs permute
+twpin_enable  fixed
+twpin_clk  fixed
+twpin_reset  fixed
+restrict side L
+
+padgroup outputs permute
+twpin_out0  fixed
+twpin_out1  fixed
+twpin_out2  fixed
+twpin_out3  fixed
+twpin_out4  fixed
+twpin_out5  fixed
+twpin_out6  fixed
+twpin_out7  fixed
+restrict side R
+
